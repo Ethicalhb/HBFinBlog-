@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HB Fin Blog - Financial Insights</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            animation: pulse 2s infinite;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            color: white;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: slideInRight 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Blog Section */
+        .section-title {
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 4px;
+            background: var(--secondary);
+            bottom: -10px;
+            left: 15%;
+            border-radius: 2px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .read-more {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--primary);
+        }
+
+        /* Full Blog Post */
+        .full-blog {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .full-blog img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .full-blog h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .full-blog-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            color: #7f8c8d;
+            font-size: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .full-blog-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .full-blog-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .full-blog-content h2 {
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+        }
+
+        .full-blog-content ul, 
+        .full-blog-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-to-blog {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-blog:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-img {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-text {
+            animation: slideInRight 1s ease-out;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .vision-mission {
+            margin-top: 2rem;
+        }
+
+        .vision-mission h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .vision-mission h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+
+        /* Guest Blog Section */
+        .guest-blog-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .guest-blog-form h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .submit-btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Podcast Section */
+        .podcast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .podcast-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .podcast-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .podcast-img {
+            position: relative;
+        }
+
+        .podcast-img img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+
+        .play-btn:hover {
+            background: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .podcast-content {
+            padding: 1.5rem;
+        }
+
+        .podcast-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .podcast-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .contact-details {
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item i {
+            width: 50px;
+            height: 50px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            background: #f5f7fa;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            animation: slideInRight 1s ease-out;
+        }
+
+        .contact-form h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-section p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1rem;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+        }
+
+        .newsletter-form button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 50px 50px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background: #c0392b;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .footer-col p {
+            margin-bottom: 1rem;
+            color: #bdc3c7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-img {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0 0.8rem;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .about-text h2,
+            .contact-info h2 {
+                font-size: 2rem;
+            }
+
+            .full-blog h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            nav {
+                display: none;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-form input {
+                border-radius: 50px;
+                margin-bottom: 1rem;
+            }
+
+            .newsletter-form button {
+                border-radius: 50px;
+                padding: 0.8rem;
+            }
+
+            .full-blog-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="#home">
+                    <img src="https://via.placeholder.com/40" alt="HB Fin Blog Logo">
+                    <h1>HB Fin Blog</h1>
+                </a>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="#about" class="nav-link" data-page="about">About Us</a></li>
+                    <li><a href="#blog" class="nav-link" data-page="blog">Blog</a></li>
+                    <li><a href="#guest-blog" class="nav-link" data-page="guest-blog">Guest Blog</a></li>
+                    <li><a href="#podcast" class="nav-link" data-page="podcast">Podcast</a></li>
+                    <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home-page" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Welcome to HB Fin Blog</h2>
+                <p>Your ultimate destination for financial insights, market trends, and investment strategies. Join our community of finance enthusiasts.</p>
+                <a href="#blog" class="btn nav-link" data-page="blog">Explore Blogs</a>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section">
+            <div class="container newsletter-container">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Stay updated with the latest financial tips, market insights, and exclusive content delivered straight to your inbox.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </section>
+
+    <!-- Blog Page -->
+    <section id="blog-page" class="page">
+        <div class="container">
+            <div class="section-title">
+                <h2>Latest Blog Posts</h2>
+            </div>
+            <div class="blog-grid">
+                <!-- Blog Card 1 -->
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Financial Planning">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> June 15, 2023</span>
+                            <span><i class="far fa-user"></i> Admin</span>
+                        </div>
+                        <h3>The Ultimate Guide to Financial Planning in 2023</h3>
+                        <p>Discover the key strategies for effective financial planning in the current economic climate and how to secure your financial future.</p>
+                        <a href="#blog-post-1" class="read-more blog-post-link" data-post="blog-post-1">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 2 -->
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1511&q=80" alt="Stock Market">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> June 10, 2023</span>
+                            <span><i class="far fa-user"></i> Guest Writer</span>
+                        </div>
+                        <h3>Navigating the Volatile Stock Market: Tips for Beginners</h3>
+                        <p>Learn how to navigate through market volatility and make informed investment decisions as a beginner in the stock market.</p>
+                        <a href="#blog-post-2" class="read-more blog-post-link" data-post="blog-post-2">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Blog Card 3 -->
+                <div class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Cryptocurrency">
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="far fa-calendar"></i> June 5, 2023</span>
+                            <span><i class="far fa-user"></i> Admin</span>
+                        </div>
+                        <h3>The Future of Cryptocurrency: Trends to Watch</h3>
+                        <p>Explore the emerging trends in cryptocurrency and blockchain technology that could shape the future of digital finance.</p>
+                        <a href="#blog-post-3" class="read-more blog-post-link" data-post="blog-post-3">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Blog Post 1 -->
+    <section id="blog-post-1" class="page full-blog">
+        <div class="container">
+            <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Financial Planning">
+            <div class="full-blog-meta">
+                <span><i class="far fa-calendar"></i> June 15, 2023</span>
+                <span><i class="far fa-user"></i> Admin</span>
+                <span><i class="far fa-clock"></i> 5 min read</span>
+            </div>
+            <h1>The Ultimate Guide to Financial Planning in 2023</h1>
+            <div class="full-blog-content">
+                <p>Financial planning is more crucial than ever in today's rapidly changing economic landscape. With inflation rates fluctuating and market conditions evolving, having a solid financial plan can mean the difference between financial security and uncertainty.</p>
+                
+                <h2>Understanding Your Current Financial Situation</h2>
+                <p>The first step in any financial plan is to assess your current situation. This includes:</p>
+                <ul>
+                    <li>Calculating your net worth (assets minus liabilities)</li>
+                    <li>Tracking your income and expenses</li>
+                    <li>Reviewing your debt obligations</li>
+                    <li>Evaluating your current investments</li>
+                </ul>
+                
+                <h2>Setting Financial Goals</h2>
+                <p>Effective financial planning requires clear, measurable goals. These might include:</p>
+                <ol>
+                    <li>Short-term goals (1-3 years): Building an emergency fund, paying off credit card debt</li>
+                    <li>Medium-term goals (3-10 years): Saving for a down payment on a home, funding education</li>
+                    <li>Long-term goals (10+ years): Retirement planning, wealth preservation</li>
+                </ol>
+                
+                <h2>Investment Strategies for 2023</h2>
+                <p>With changing market conditions, consider these investment approaches:</p>
+                <p><strong>Diversification:</strong> Spread your investments across different asset classes to mitigate risk.</p>
+                <p><strong>Tax-efficient investing:</strong> Take advantage of tax-advantaged accounts like 401(k)s and IRAs.</p>
+                <p><strong>ESG investing:</strong> Environmental, Social, and Governance factors are becoming increasingly important in investment decisions.</p>
+                
+                <p>Remember, financial planning is not a one-time event but an ongoing process. Regularly review and adjust your plan as your circumstances and the economic environment change.</p>
+            </div>
+            <a href="#blog" class="back-to-blog nav-link" data-page="blog"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+        </div>
+    </section>
+
+    <!-- Full Blog Post 2 -->
+    <section id="blog-post-2" class="page full-blog">
+        <div class="container">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1511&q=80" alt="Stock Market">
+            <div class="full-blog-meta">
+                <span><i class="far fa-calendar"></i> June 10, 2023</span>
+                <span><i class="far fa-user"></i> Guest Writer</span>
+                <span><i class="far fa-clock"></i> 7 min read</span>
+            </div>
+            <h1>Navigating the Volatile Stock Market: Tips for Beginners</h1>
+            <div class="full-blog-content">
+                <p>Stock market volatility can be intimidating for new investors, but understanding how to navigate these fluctuations is key to long-term success. Here's what every beginner should know about investing in volatile markets.</p>
+                
+                <h2>Understanding Market Volatility</h2>
+                <p>Market volatility refers to the frequency and magnitude of price movements, both up and down. While it can be unsettling, volatility is a normal part of market behavior and can present opportunities for disciplined investors.</p>
+                
+                <h2>Essential Strategies for Volatile Markets</h2>
+                <p><strong>1. Dollar-Cost Averaging:</strong> Invest a fixed amount at regular intervals regardless of market conditions. This helps smooth out purchase prices over time.</p>
+                <p><strong>2. Focus on Quality:</strong> In uncertain times, prioritize companies with strong balance sheets, consistent earnings, and competitive advantages.</p>
+                <p><strong>3. Maintain Perspective:</strong> Remember that market downturns are temporary, while the long-term trend of the market has historically been upward.</p>
+                
+                <h2>Common Mistakes to Avoid</h2>
+                <ul>
+                    <li>Panic selling during market dips</li>
+                    <li>Trying to time the market</li>
+                    <li>Overconcentration in a single stock or sector</li>
+                    <li>Neglecting to rebalance your portfolio</li>
+                </ul>
+                
+                <h2>Building a Resilient Portfolio</h2>
+                <p>A well-constructed portfolio should include:</p>
+                <ol>
+                    <li>A mix of stocks and bonds appropriate for your risk tolerance</li>
+                    <li>Diversification across sectors and geographic regions</li>
+                    <li>Some exposure to defensive sectors that tend to be less volatile</li>
+                    <li>A cash reserve for emergencies and opportunistic investing</li>
+                </ol>
+                
+                <p>Volatility is inevitable in the stock market, but by following these principles and maintaining a long-term perspective, beginners can navigate turbulent markets with confidence.</p>
+            </div>
+            <a href="#blog" class="back-to-blog nav-link" data-page="blog"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+        </div>
+    </section>
+
+    <!-- Full Blog Post 3 -->
+    <section id="blog-post-3" class="page full-blog">
+        <div class="container">
+            <img src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Cryptocurrency">
+            <div class="full-blog-meta">
+                <span><i class="far fa-calendar"></i> June 5, 2023</span>
+                <span><i class="far fa-user"></i> Admin</span>
+                <span><i class="far fa-clock"></i> 6 min read</span>
+            </div>
+            <h1>The Future of Cryptocurrency: Trends to Watch</h1>
+            <div class="full-blog-content">
+                <p>The cryptocurrency landscape continues to evolve at a rapid pace. As we move through 2023, several key trends are shaping the future of digital assets and blockchain technology.</p>
+                
+                <h2>1. Increased Institutional Adoption</h2>
+                <p>Major financial institutions are increasingly embracing cryptocurrency, offering crypto-related products and services to their clients. This institutional involvement brings both legitimacy and stability to the market.</p>
+                
+                <h2>2. Regulatory Developments</h2>
+                <p>Governments worldwide are working to establish clear regulatory frameworks for cryptocurrencies. These regulations aim to protect investors while fostering innovation in the space.</p>
+                
+                <h2>3. The Rise of DeFi 2.0</h2>
+                <p>Decentralized Finance (DeFi) is evolving with improved security, scalability, and user experience. New protocols are addressing the limitations of first-generation DeFi platforms.</p>
+                
+                <h2>4. Layer 2 Scaling Solutions</h2>
+                <p>To address scalability issues, Layer 2 solutions like rollups and sidechains are gaining traction, enabling faster transactions and lower fees without compromising security.</p>
+                
+                <h2>5. NFTs Beyond Art</h2>
+                <p>Non-Fungible Tokens (NFTs) are finding applications beyond digital art, including:</p>
+                <ul>
+                    <li>Gaming assets and virtual worlds</li>
+                    <li>Real estate tokenization</li>
+                    <li>Identity verification</li>
+                    <li>Supply chain tracking</li>
+                </ul>
+                
+                <h2>6. Environmental Concerns and Solutions</h2>
+                <p>The crypto industry is responding to environmental concerns with:</p>
+                <ol>
+                    <li>The transition of Ethereum to Proof-of-Stake</li>
+                    <li>Development of more energy-efficient consensus mechanisms</li>
+                    <li>Carbon offset initiatives</li>
+                </ol>
+                
+                <p>While the cryptocurrency market remains volatile, these emerging trends point to a maturing industry with significant potential for long-term growth and innovation.</p>
+            </div>
+            <a href="#blog" class="back-to-blog nav-link" data-page="blog"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section id="about-page" class="page">
+        <div class="container about-section">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About HB Fin Blog</h2>
+                    <p>HB Fin Blog was founded with a simple mission: to make financial knowledge accessible to everyone. We believe that financial literacy is the key to personal and professional success.</p>
+                    <p>Our team of financial experts and writers are dedicated to providing high-quality, actionable content that helps our readers make informed financial decisions.</p>
+                    
+                    <div class="vision-mission">
+                        <h3>Our Vision</h3>
+                        <p>To create a world where everyone has the financial knowledge and tools they need to achieve their dreams and secure their future.</p>
+                        
+                        <h3>Our Mission</h3>
+                        <p>To demystify finance through clear, engaging content that educates and empowers our readers to take control of their financial lives.</p>
+                    </div>
+                </div>
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="About HB Fin Blog">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guest Blog Page -->
+    <section id="guest-blog-page" class="page">
+        <div class="container guest-blog-section">
+            <div class="section-title">
+                <h2>Write a Guest Blog</h2>
+            </div>
+            <div class="guest-blog-form">
+                <h2>Share Your Financial Insights</h2>
+                <form id="guestBlogForm">
+                    <div class="form-group">
+                        <label for="author-name">Your Name</label>
+                        <input type="text" id="author-name" name="author-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="author-email">Your Email</label>
+                        <input type="email" id="author-email" name="author-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="author-bio">Short Bio (50 words max)</label>
+                        <textarea id="author-bio" name="author-bio" maxlength="300" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="blog-title">Blog Title</label>
+                        <input type="text" id="blog-title" name="blog-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="blog-category">Category</label>
+                        <select id="blog-category" name="blog-category" required>
+                            <option value="">Select a category</option>
+                            <option value="personal-finance">Personal Finance</option>
+                            <option value="investing">Investing</option>
+                            <option value="stock-market">Stock Market</option>
+                            <option value="real-estate">Real Estate</option>
+                            <option value="cryptocurrency">Cryptocurrency</option>
+                            <option value="retirement">Retirement Planning</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="blog-content">Blog Content</label>
+                        <textarea id="blog-content" name="blog-content" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="blog-image">Featured Image (URL)</label>
+                        <input type="url" id="blog-image" name="blog-image" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Guest Blog</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Podcast Page -->
+    <section id="podcast-page" class="page">
+        <div class="container podcast-section">
+            <div class="section-title">
+                <h2>Latest Podcasts</h2>
+            </div>
+            <div class="podcast-grid">
+                <!-- Podcast Card 1 -->
+                <div class="podcast-card">
+                    <div class="podcast-img">
+                        <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Podcast Cover">
+                        <div class="play-btn">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="podcast-content">
+                        <h3>Market Trends 2023: What to Expect</h3>
+                        <div class="podcast-meta">
+                            <span><i class="far fa-clock"></i> 45 min</span>
+                            <span><i class="far fa-calendar"></i> June 12, 2023</span>
+                        </div>
+                        <p>Join us as we discuss the major market trends expected to dominate 2023 and how to position your portfolio.</p>
+                    </div>
+                </div>
+
+                <!-- Podcast Card 2 -->
+                <div class="podcast-card">
+                    <div class="podcast-img">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1415&q=80" alt="Podcast Cover">
+                        <div class="play-btn">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="podcast-content">
+                        <h3>Real Estate Investing for Beginners</h3>
+                        <div class="podcast-meta">
+                            <span><i class="far fa-clock"></i> 38 min</span>
+                            <span><i class="far fa-calendar"></i> June 5, 2023</span>
+                        </div>
+                        <p>Learn the fundamentals of real estate investing and how to get started with limited capital.</p>
+                    </div>
+                </div>
+
+                <!-- Podcast Card 3 -->
+                <div class="podcast-card">
+                    <div class="podcast-img">
+                        <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Podcast Cover">
+                        <div class="play-btn">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="podcast-content">
+                        <h3>Retirement Planning at Any Age</h3>
+                        <div class="podcast-meta">
+                            <span><i class="far fa-clock"></i> 52 min</span>
+                            <span><i class="far fa-calendar"></i> May 28, 2023</span>
+                        </div>
+                        <p>It's never too early or too late to plan for retirement. Discover strategies for every life stage.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Page -->
+    <section id="contact-page" class="page">
+        <div class="container contact-section">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Get In Touch</h2>
+                    <p>Have questions, suggestions, or want to contribute to our blog? We'd love to hear from you! Fill out the form or use the contact details below.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Location</h4>
+                                <p>123 Financial Street, Moneyville, MV 12345</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p>contact@hbfinblog.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send Us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>About HB Fin Blog</h3>
+                    <p>Your trusted source for financial education and insights. We're committed to helping you make informed financial decisions.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" class="nav-link" data-page="home">Home</a></li>
+                        <li><a href="#about" class="nav-link" data-page="about">About Us</a></li>
+                        <li><a href="#blog" class="nav-link" data-page="blog">Blog</a></li>
+                        <li><a href="#guest-blog" class="nav-link" data-page="guest-blog">Guest Blog</a></li>
+                        <li><a href="#podcast" class="nav-link" data-page="podcast">Podcast</a></li>
+                        <li><a href="#contact" class="nav-link" data-page="contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#blog" class="nav-link" data-page="blog">Personal Finance</a></li>
+                        <li><a href="#blog" class="nav-link" data-page="blog">Investing</a></li>
+                        <li><a href="#blog" class="nav-link" data-page="blog">Stock Market</a></li>
+                        <li><a href="#blog" class="nav-link" data-page="blog">Real Estate</a></li>
+                        <li><a href="#blog" class="nav-link" data-page="blog">Cryptocurrency</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HB Fin Blog. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu');
+        const nav = document.querySelector('nav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // Page Navigation System
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show home page by default
+            showPage('home-page');
+            
+            // Set up navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const pageId = this.getAttribute('data-page') + '-page';
+                    showPage(pageId);
+                    
+                    // Close mobile menu if open
+                    nav.classList.remove('active');
+                    
+                    // Scroll to top
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Set up blog post links
+            document.querySelectorAll('.blog-post-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const postId = this.getAttribute('data-post');
+                    showPage(postId);
+                    
+                    // Close mobile menu if open
+                    nav.classList.remove('active');
+                    
+                    // Scroll to top
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Handle back button
+            window.addEventListener('popstate', function() {
+                const hash = window.location.hash.substring(1);
+                if (hash === '') {
+                    showPage('home-page');
+                } else if (hash.startsWith('blog-post')) {
+                    showPage(hash);
+                } else {
+                    showPage(hash + '-page');
+                }
+            });
+        });
+        
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show requested page
+            const activePage = document.getElementById(pageId);
+            if (activePage) {
+                activePage.classList.add('active');
+                
+                // Update URL
+                if (pageId === 'home-page') {
+                    history.pushState(null, null, ' ');
+                } else if (pageId.startsWith('blog-post')) {
+                    history.pushState(null, null, '#' + pageId);
+                } else {
+                    history.pushState(null, null, '#' + pageId.replace('-page', ''));
+                }
+            } else {
+                // Default to home if page not found
+                showPage('home-page');
+            }
+        }
+
+        // Contact Form Submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            console.log('Form submitted:', { name, email, message });
+            
+            // Show success message
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Reset form
+            contactForm.reset();
+        });
+
+        // Newsletter Form Submission
+        const newsletterForm = document.getElementById('newsletterForm');
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = this.querySelector('input[type="email"]').value;
+            
+            // Here you would typically send the email to your newsletter service
+            console.log('Newsletter subscription:', email);
+            
+            // Show success message
+            alert('Thank you for subscribing to our newsletter!');
+            
+            // Reset form
+            newsletterForm.reset();
+        });
+
+        // Guest Blog Form Submission
+        const guestBlogForm = document.getElementById('guestBlogForm');
+        guestBlogForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const authorName = document.getElementById('author-name').value;
+            const authorEmail = document.getElementById('author-email').value;
+            const authorBio = document.getElementById('author-bio').value;
+            const blogTitle = document.getElementById('blog-title').value;
+            const blogCategory = document.getElementById('blog-category').value;
+            const blogContent = document.getElementById('blog-content').value;
+            const blogImage = document.getElementById('blog-image').value;
+            
+            // Here you would typically send the data to a server
+            console.log('Guest blog submitted:', { 
+                authorName, 
+                authorEmail, 
+                authorBio, 
+                blogTitle, 
+                blogCategory, 
+                blogContent, 
+                blogImage 
+            });
+            
+            // Show success message
+            alert('Thank you for your guest blog submission! We will review it and get back to you soon.');
+            
+            // Reset form
+            guestBlogForm.reset();
+        });
+
+        // Podcast Play Button
+        document.querySelectorAll('.play-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // In a real app, this would play the podcast episode
+                alert('Now playing podcast episode...');
+            });
+        });
+    </script>
+</body>
+</html>
